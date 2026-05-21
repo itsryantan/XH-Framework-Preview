@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小荷AI医生冷启 Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="stage" aria-label="小荷AI医生冷启原型">
+      <section class="phone cold-phone" id="coldPhone" data-screen="cold" data-mode="cold" data-chat="temp" data-panel="none">
+        <div class="status-bar" aria-hidden="true">
+          <img class="status-img" src="./assets/status-bar.png" alt="" />
+        </div>
+
+        <section class="chat-page cold-main" aria-label="冷启首页">
+          <header class="top-nav">
+            <button class="brand-btn" type="button" data-action="open-sidebar" aria-label="打开侧边栏">
+              <img src="./assets/nav-brand.png" alt="小荷AI医生" />
+            </button>
+            <div class="nav-tools">
+              <button class="icon-btn" type="button" aria-label="新会话">
+                <img src="./assets/nav-icon-newchat.png" alt="" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="播报">
+                <img src="./assets/nav-icon-audio.png" alt="" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="电话">
+                <img src="./assets/nav-icon-phone.png" alt="" />
+              </button>
+            </div>
+          </header>
+
+          <nav class="people-tabs cold-tabs" aria-label="咨询对象">
+            <button class="tab tab-temp" type="button" data-action="choose-temp">
+              <img src="./assets/tab-temp.png" alt="" />
+              <span>临时咨询</span>
+            </button>
+            <button class="tab tab-self" type="button" data-action="choose-self">
+              <img src="./assets/cold-tab-self.png" alt="" />
+              <span>本人</span>
+            </button>
+            <button class="tab tab-new-person" type="button" data-action="open-new-person">
+              <img src="./assets/tab-add.png" alt="" />
+              <span>新建咨询人</span>
+            </button>
+          </nav>
+
+          <section class="cold-choice-panel" aria-label="咨询对象选择">
+            <h1>你好，</h1>
+            <h2>今天想为谁咨询呢？</h2>
+            <div class="cold-choice-grid">
+              <button class="consult-choice" type="button" data-action="choose-temp">
+                <span class="choice-visual temp-choice"><img src="./assets/tab-temp.png" alt="" /></span>
+                <strong>临时咨询</strong>
+                <em>不选择咨询人</em>
+              </button>
+              <button class="consult-choice" type="button" data-action="choose-self">
+                <span class="choice-visual self-choice"><img src="./assets/cold-self-icon.png" alt="" /></span>
+                <strong>本人</strong>
+                <em>结合健康档案</em>
+              </button>
+              <button class="consult-choice" type="button" data-action="open-new-person">
+                <span class="choice-visual add-choice"><img src="./assets/tab-add.png" alt="" /></span>
+                <strong>新建咨询人</strong>
+              </button>
+            </div>
+          </section>
+
+          <section class="chat-list cold-chat-list" aria-label="对话内容"></section>
+
+          <footer class="composer">
+            <div class="quick-actions">
+              <button type="button"><img src="./assets/action-doctor.png" alt="" />AI诊室</button>
+              <button type="button"><img src="./assets/action-report.png" alt="" />报告解读</button>
+              <button type="button"><img src="./assets/action-body.png" alt="" />拍患处</button>
+              <button type="button"><img src="./assets/action-medicine.png" alt="" />拍药盒</button>
+            </div>
+            <form class="input-box" id="coldComposerForm">
+              <button type="button" class="round-symbol" aria-label="拍照">
+                <img src="./assets/input-camera.png" alt="" />
+              </button>
+              <input id="coldMessageInput" type="text" placeholder="输入问题或按住说话" autocomplete="off" />
+              <button type="button" class="round-symbol" aria-label="语音">
+                <img src="./assets/input-mic.png" alt="" />
+              </button>
+              <button type="submit" class="round-symbol" aria-label="发送">
+                <img src="./assets/input-plus.png" alt="" />
+              </button>
+            </form>
+          </footer>
+        </section>
+
+        <aside class="drawer cold-drawer" aria-label="侧边栏">
+          <div class="drawer-head">
+            <img class="drawer-logo" src="./assets/logo-wordmark.png" alt="小荷AI医生" />
+            <button class="icon-btn" type="button" aria-label="搜索">
+              <img src="./assets/icon-drawer-search.png" alt="" />
+            </button>
+          </div>
+          <div class="drawer-scroll cold-drawer-scroll">
+            <button class="health-link cold-health-link" type="button">
+              <img class="health-folder" src="./assets/cold-health-record-icon.png" alt="" />
+              <span>健康档案</span>
+              <span>›</span>
+            </button>
+            <div class="drawer-line"></div>
+            <div class="empty-history" aria-label="暂无历史">
+              <img class="empty-history-illustration" src="./assets/cold-empty-history.png" alt="" />
+              <p>暂无历史</p>
+            </div>
+          </div>
+          <div class="drawer-bottom">
+            <button class="user-pill" type="button"><span class="default-avatar"></span><span>Ryan</span></button>
+            <button class="new-chat" type="button" data-action="choose-temp" aria-label="新建对话">
+              <img src="./assets/icon-new-chat.png" alt="" />
+            </button>
+          </div>
+        </aside>
+        <button class="drawer-scrim" type="button" data-action="close-sidebar" aria-label="关闭侧边栏"></button>
+
+        <section class="person-panel" aria-label="新建咨询人">
+          <button class="person-panel-mask" type="button" data-action="close-person-panel" aria-label="关闭新建咨询人"></button>
+          <div class="person-sheet" role="dialog" aria-modal="true" aria-labelledby="cold-person-title">
+            <header class="person-sheet-title">
+              <span class="sheet-spacer" aria-hidden="true"></span>
+              <h2 id="cold-person-title">新建咨询人</h2>
+              <button class="sheet-close" type="button" data-action="close-person-panel" aria-label="关闭">×</button>
+            </header>
+            <div class="person-form-card">
+              <label class="person-row">
+                <span class="person-label">昵称<i>*</i></span>
+                <input class="nickname-field" type="text" placeholder="输入咨询人昵称" autocomplete="off" />
+              </label>
+              <div class="person-row sex-row">
+                <span class="person-label">性别<i>*</i></span>
+                <div class="sex-options" role="radiogroup" aria-label="性别">
+                  <label><input type="radio" name="cold-sex" value="male" /><span></span><em>男</em></label>
+                  <label><input type="radio" name="cold-sex" value="female" /><span></span><em>女</em></label>
+                </div>
+              </div>
+              <button class="person-row birth-row" type="button">
+                <span class="person-label">出生日期<i>*</i></span>
+                <span class="birth-value">2000-01-01 <b>›</b></span>
+              </button>
+            </div>
+            <div class="mock-keyboard" aria-hidden="true">
+              <div class="keyboard-suggestions"><span> </span><span> </span><span> </span></div>
+              <div class="keyboard-rows">
+                <div class="keyboard-row"><span>q</span><span>w</span><span>e</span><span>r</span><span>t</span><span>y</span><span>u</span><span>i</span><span>o</span><span>p</span></div>
+                <div class="keyboard-row narrow"><span>a</span><span>s</span><span>d</span><span>f</span><span>g</span><span>h</span><span>j</span><span>k</span><span>l</span></div>
+                <div class="keyboard-row action-row"><span class="wide-key">⇧</span><span>z</span><span>x</span><span>c</span><span>v</span><span>b</span><span>n</span><span>m</span><span class="wide-key">⌫</span></div>
+                <div class="keyboard-row bottom-row"><span class="mode-key">123</span><span class="mode-key space">space</span><span class="mode-key">return</span></div>
+              </div>
+            </div>
+            <div class="person-save-area">
+              <button class="person-save-btn" type="button" data-action="save-person">保存</button>
+              <span class="sheet-home-indicator" aria-hidden="true"></span>
+            </div>
+          </div>
+        </section>
+
+        <div class="home-indicator" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <script src="./cold-start.js"></script>
+  </body>
+</html>

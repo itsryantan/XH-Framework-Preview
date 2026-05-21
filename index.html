@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小荷AI医生交互 Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="scenario-switcher" aria-label="冷启场景选择">
+      <button class="scenario-option active" type="button" data-action="set-guide-scenario" data-scenario="unselected">老用户上次未选择咨询人冷启</button>
+      <button class="scenario-option" type="button" data-action="set-guide-scenario" data-scenario="selected">老用户上次选择了咨询人冷启</button>
+    </div>
+    <main class="stage" aria-label="小荷AI医生交互原型">
+      <section class="phone" id="phone" data-screen="chat" data-chat="temp">
+        <div class="status-bar" aria-hidden="true">
+          <img class="status-img" src="./assets/status-bar.png" alt="" />
+        </div>
+
+        <section class="chat-page" aria-label="聊天页">
+          <header class="top-nav">
+            <button class="brand-btn" type="button" data-action="open-sidebar" aria-label="打开侧边栏">
+              <img src="./assets/nav-brand.png" alt="小荷AI医生" />
+            </button>
+            <div class="nav-tools">
+              <button class="icon-btn" type="button" aria-label="新会话">
+                <img src="./assets/nav-icon-newchat.png" alt="" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="播报">
+                <img src="./assets/nav-icon-audio.png" alt="" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="电话">
+                <img src="./assets/nav-icon-phone.png" alt="" />
+              </button>
+            </div>
+          </header>
+
+          <nav class="people-tabs" aria-label="咨询对象">
+            <button class="tab tab-temp" type="button" data-action="chat-temp">
+              <img src="./assets/tab-temp.png" alt="" />
+              <span>临时咨询</span>
+            </button>
+            <button class="tab tab-self" type="button" data-action="chat-self">
+              <img class="mini-avatar" src="./assets/tab-self.png" alt="" />
+              <span>本人</span>
+            </button>
+            <button class="tab tab-mom" type="button" data-action="chat-mom">
+              <img class="mini-avatar" src="./assets/tab-mom.png" alt="" />
+              <span>妈妈</span>
+            </button>
+            <button class="tab tab-add" type="button" data-action="open-new-person" aria-label="新增咨询对象">
+              <img src="./assets/tab-add.png" alt="" />
+            </button>
+          </nav>
+
+          <button class="guide-bubble is-visible" type="button" aria-label="引导提示" data-guide="unselected">
+            <img src="./assets/guide-unselected.png" alt="" />
+          </button>
+
+          <section class="chat-list" aria-label="对话内容"></section>
+
+          <footer class="composer">
+            <div class="quick-actions">
+              <button type="button"><img src="./assets/action-doctor.png" alt="" />AI诊室</button>
+              <button type="button"><img src="./assets/action-report.png" alt="" />报告解读</button>
+              <button type="button"><img src="./assets/action-body.png" alt="" />拍患处</button>
+              <button type="button"><img src="./assets/action-medicine.png" alt="" />拍药盒</button>
+            </div>
+            <form class="input-box" id="composerForm">
+              <button type="button" class="round-symbol" aria-label="拍照">
+                <img src="./assets/input-camera.png" alt="" />
+              </button>
+              <input id="messageInput" type="text" placeholder="输入问题或按住说话" autocomplete="off" />
+              <button type="button" class="round-symbol" aria-label="语音">
+                <img src="./assets/input-mic.png" alt="" />
+              </button>
+              <button type="submit" class="round-symbol" aria-label="发送">
+                <img src="./assets/input-plus.png" alt="" />
+              </button>
+            </form>
+          </footer>
+        </section>
+
+        <aside class="drawer" aria-label="侧边栏">
+          <div class="drawer-head">
+            <img class="drawer-logo" src="./assets/logo-wordmark.png" alt="小荷AI医生" />
+            <button class="icon-btn" type="button" aria-label="搜索">
+              <img src="./assets/icon-drawer-search.png" alt="" />
+            </button>
+          </div>
+          <div class="drawer-scroll">
+            <button class="health-link" type="button" data-action="open-health">
+              <span>健康档案</span>
+              <span>›</span>
+            </button>
+            <div class="drawer-people">
+              <button type="button" data-action="open-health-self"><img src="./assets/avatar-self.png" alt="" /><span>本人</span></button>
+              <button type="button" data-action="open-health-mom"><img src="./assets/avatar-mom.png" alt="" /><span>妈妈</span></button>
+              <button type="button" class="person-add" data-action="open-new-person" aria-label="新建咨询人"><span>＋</span></button>
+            </div>
+            <div class="drawer-line"></div>
+            <div class="history">
+              <p class="history-date">今天</p>
+              <button class="history-item active" type="button" data-action="open-thread" data-thread="self-brain"><span>脑出血昏迷的病情细节</span><em>本人</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-throat-today"><span>喉咙干痒，咽口水的时候有点疼</span></button>
+              <p class="history-date">昨天</p>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="mom-brain"><span>妈妈脑出血昏迷的病情细节</span><em>妈妈</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-throat-yesterday"><span>喉咙干痒，咽口水的时候有点疼</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-pregnancy"><span>怀孕五周多，彩超说孕囊小</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="self-back-pain"><span>熬夜会引起背痛吗</span><em>本人</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-mouth-ulcer"><span>口腔溃疡是什么原因</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-stomach-noise"><span>肚子咕咕叫是什么原因</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="mom-sugar"><span>妈妈空腹血糖 7.2 要紧吗</span><em>妈妈</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="self-eye-dry"><span>眼睛干涩酸胀怎么缓解</span><em>本人</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-allergy"><span>身上突然起红疹很痒</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="mom-knee"><span>妈妈膝盖下楼梯疼</span><em>妈妈</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="self-sleep"><span>最近总是睡不踏实</span><em>本人</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-cough"><span>咳嗽两周一直不好</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="mom-dizziness"><span>妈妈起床头晕站不稳</span><em>妈妈</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="self-neck"><span>脖子僵硬转动会疼</span><em>本人</em></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="temp-diarrhea"><span>吃海鲜后拉肚子</span></button>
+              <button class="history-item" type="button" data-action="open-thread" data-thread="mom-chest"><span>妈妈胸口偶尔发闷</span><em>妈妈</em></button>
+            </div>
+          </div>
+          <div class="drawer-bottom">
+            <button class="user-pill" type="button"><span class="default-avatar"></span><span>Ryan</span></button>
+            <button class="new-chat" type="button" data-action="close-sidebar" aria-label="新建对话">
+              <img src="./assets/icon-new-chat.png" alt="" />
+            </button>
+          </div>
+        </aside>
+        <button class="drawer-scrim" type="button" data-action="close-sidebar" aria-label="关闭侧边栏"></button>
+
+        <section class="health-page" aria-label="健康档案">
+          <div class="health-bg"></div>
+          <header class="health-nav">
+            <button class="icon-btn" type="button" data-action="close-health" aria-label="返回">
+              <img src="./assets/icon-health-back.png" alt="" />
+            </button>
+            <h2>健康档案</h2>
+            <button class="health-add" type="button">
+              <img src="./assets/icon-health-add.png" alt="" />
+              新增
+            </button>
+          </header>
+
+          <div class="profile-tabs">
+            <button class="profile-card active" type="button" data-action="health-person-mom" data-person="mom" aria-label="妈妈">
+              <img class="profile-state profile-state-active" src="./assets/profile-mom-active.png" alt="" />
+              <img class="profile-state profile-state-muted" src="./assets/profile-mom-muted.png" alt="" />
+            </button>
+            <button class="profile-card muted" type="button" data-action="health-person-self" data-person="self" aria-label="本人">
+              <img class="profile-state profile-state-active" src="./assets/profile-self-active.png" alt="" />
+              <img class="profile-state profile-state-muted" src="./assets/profile-self-muted.png" alt="" />
+            </button>
+          </div>
+
+          <div class="health-list">
+            <article class="record-card consultation">
+              <header>
+                <h3><span>💾</span><strong data-health-title>【妈妈】的咨询记录</strong></h3>
+                <button type="button">更多</button>
+              </header>
+              <div class="mini-panel consult-panel">
+                <div class="floating-note"><span>示例</span> 2026-02-01&nbsp;&nbsp;拉肚子腹痛腹泻</div>
+                <p>为该成员咨询的对话，会展示在这里</p>
+              </div>
+            </article>
+
+            <article class="record-card report">
+              <header>
+                <h3><span>📁</span>报告夹</h3>
+                <button type="button">上传</button>
+              </header>
+              <div class="mini-panel report-panel">
+                <div class="sheet">
+                  <span class="corner"></span>
+                  <p><span>示例</span>我的报告单</p>
+                  <i></i><i></i><i></i>
+                </div>
+                <p>AI医生会结合【报告单】提供精准建议</p>
+              </div>
+            </article>
+
+            <article class="record-card tips">
+              <header>
+                <h3><span>💡</span>给AI医生的提示</h3>
+                <button type="button">新增</button>
+              </header>
+              <div class="mini-panel tips-panel">
+                <div class="prompt-card"><span>示例</span>我对青霉素和芒果过敏，有慢性咽炎；我喜欢简洁高效的回答，直接告诉我结论<i></i></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="person-panel" aria-label="新建咨询人">
+          <button class="person-panel-mask" type="button" data-action="close-person-panel" aria-label="关闭新建咨询人"></button>
+          <div class="person-sheet" role="dialog" aria-modal="true" aria-labelledby="person-sheet-title">
+            <header class="person-sheet-title">
+              <span class="sheet-spacer" aria-hidden="true"></span>
+              <h2 id="person-sheet-title">新建咨询人</h2>
+              <button class="sheet-close" type="button" data-action="close-person-panel" aria-label="关闭">×</button>
+            </header>
+            <div class="person-form-card">
+              <label class="person-row">
+                <span class="person-label">昵称<i>*</i></span>
+                <input class="nickname-field" type="text" placeholder="输入咨询人昵称" autocomplete="off" />
+              </label>
+              <div class="person-row">
+                <span class="person-label">性别<i>*</i></span>
+                <div class="sex-options" role="radiogroup" aria-label="性别">
+                  <label><input type="radio" name="sex" value="male" /><span></span><em>男</em></label>
+                  <label><input type="radio" name="sex" value="female" /><span></span><em>女</em></label>
+                </div>
+              </div>
+              <button class="person-row birth-row" type="button">
+                <span class="person-label">出生日期<i>*</i></span>
+                <span class="birth-value">2000-01-01 <b>›</b></span>
+              </button>
+            </div>
+            <div class="mock-keyboard" aria-hidden="true">
+              <div class="keyboard-suggestions">
+                <span> </span>
+                <span> </span>
+                <span> </span>
+              </div>
+              <div class="keyboard-rows">
+                <div class="keyboard-row">
+                  <span>q</span><span>w</span><span>e</span><span>r</span><span>t</span><span>y</span><span>u</span><span>i</span><span>o</span><span>p</span>
+                </div>
+                <div class="keyboard-row narrow">
+                  <span>a</span><span>s</span><span>d</span><span>f</span><span>g</span><span>h</span><span>j</span><span>k</span><span>l</span>
+                </div>
+                <div class="keyboard-row action-row">
+                  <span class="wide-key">⇧</span><span>z</span><span>x</span><span>c</span><span>v</span><span>b</span><span>n</span><span>m</span><span class="wide-key">⌫</span>
+                </div>
+                <div class="keyboard-row bottom-row">
+                  <span class="mode-key">123</span><span class="mode-key space">space</span><span class="mode-key">return</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="home-indicator" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
