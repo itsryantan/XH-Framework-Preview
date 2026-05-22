@@ -1618,6 +1618,27 @@ button {
   object-fit: contain;
 }
 
+.cold-profile-list {
+  display: none;
+}
+
+.cold-phone[data-records="ready"] .cold-profile-list {
+  display: flex;
+}
+
+.cold-phone[data-records="ready"] .cold-health-link {
+  justify-content: space-between;
+  gap: 0;
+  height: 26px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 26px;
+}
+
+.cold-phone[data-records="ready"] .health-folder {
+  display: none;
+}
+
 .empty-history {
   position: absolute;
   top: 352px;

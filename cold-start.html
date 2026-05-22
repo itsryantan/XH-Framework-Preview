@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>小荷AI医生冷启 Demo</title>
-    <link rel="stylesheet" href="./styles.css?v=20260522-unselected-tab-guide-v2" />
+    <link rel="stylesheet" href="./styles.css?v=20260522-health-entry-sidebar" />
   </head>
   <body>
     <main class="stage" aria-label="小荷AI医生冷启原型">
-      <section class="phone cold-phone" id="coldPhone" data-screen="cold" data-mode="cold" data-chat="temp" data-panel="none">
+      <section class="phone cold-phone" id="coldPhone" data-screen="cold" data-mode="cold" data-chat="temp" data-panel="none" data-records="empty">
         <div class="status-bar" aria-hidden="true">
           <img class="status-img" src="./assets/status-bar.png" alt="" />
         </div>
@@ -104,6 +104,9 @@
               <span>健康档案</span>
               <span>›</span>
             </button>
+            <div class="drawer-people cold-profile-list" aria-label="健康档案咨询人">
+              <button type="button" class="person-add" data-action="open-new-person" aria-label="新建咨询人"><span>＋</span></button>
+            </div>
             <div class="drawer-line"></div>
             <div class="empty-history" aria-label="暂无历史">
               <img class="empty-history-illustration" src="./assets/cold-empty-history.png" alt="" />
@@ -164,6 +167,6 @@
       </section>
     </main>
 
-    <script src="./cold-start.js?v=20260522-health-entry-person"></script>
+    <script src="./cold-start.js?v=20260522-health-entry-sidebar"></script>
   </body>
 </html>

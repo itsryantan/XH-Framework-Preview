@@ -8,9 +8,15 @@ const selfTabLabel = document.querySelector(".tab-self span");
 const sexInputs = document.querySelectorAll('input[name="cold-sex"]');
 const tabs = document.querySelector(".cold-tabs");
 const createPersonTab = document.querySelector(".tab-new-person");
+const drawerPeople = document.querySelector(".cold-profile-list");
+const drawerAddButton = drawerPeople?.querySelector(".person-add");
 const avatarByGender = {
   male: "./assets/tab-self.png",
   female: "./assets/tab-mom.png",
+};
+const drawerAvatarByGender = {
+  male: "./assets/avatar-self.png",
+  female: "./assets/avatar-mom.png",
 };
 let createdPersonIndex = 0;
 let selfGender = "male";
@@ -61,6 +67,36 @@ function setSelectedGender(gender) {
 
 function getAvatarForGender(gender) {
   return avatarByGender[gender] || avatarByGender.male;
+}
+
+function getDrawerAvatarForGender(gender) {
+  return drawerAvatarByGender[gender] || drawerAvatarByGender.male;
+}
+
+function upsertDrawerPerson(chatId, name, gender) {
+  if (!phone || !drawerPeople || !drawerAddButton || !chatId) return;
+
+  phone.dataset.records = "ready";
+  let button = drawerPeople.querySelector(`[data-chat-id="${chatId}"]`);
+  if (!button) {
+    button = document.createElement("button");
+    button.type = "button";
+    button.className = "cold-profile-person";
+    button.dataset.chatId = chatId;
+    button.dataset.action = chatId === "self" ? "choose-self" : "select-created-person";
+
+    const avatar = document.createElement("img");
+    avatar.alt = "";
+    const label = document.createElement("span");
+
+    button.append(avatar, label);
+    drawerPeople.insertBefore(button, drawerAddButton);
+  }
+
+  const avatar = button.querySelector("img");
+  const label = button.querySelector("span");
+  if (avatar) avatar.src = getDrawerAvatarForGender(gender);
+  if (label) label.textContent = name;
 }
 
 function createCreatedPersonTab(name, gender) {
@@ -118,6 +154,7 @@ function openPersonPanel(prefill = "", source = "new") {
   phone.dataset.panel = "person";
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = source;
+  phone.dataset.panelReturnScreen = phone.dataset.screen || "";
   setSelectedGender(source === "self" ? selfGender : "");
   if (nicknameField) {
     nicknameField.value = prefill;
@@ -151,6 +188,7 @@ function closePersonPanel() {
   phone.dataset.panel = "none";
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = "";
+  phone.dataset.panelReturnScreen = "";
 }
 
 function collapseKeyboard() {
@@ -164,10 +202,12 @@ function savePerson() {
   const fallbackName = source === "self" ? "本人" : "咨询人";
   const name = nicknameField?.value.trim() || fallbackName;
   const gender = getSelectedGender();
+  const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar";
   phone.dataset.mode = "chat";
   phone.dataset.panel = "none";
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = "";
+  phone.dataset.panelReturnScreen = "";
 
   if (source === "self") {
     selfProfileCreated = true;
@@ -175,12 +215,14 @@ function savePerson() {
     if (selfTabAvatar) selfTabAvatar.src = getAvatarForGender(gender);
     if (selfTabLabel) selfTabLabel.textContent = name;
     setActiveChat("self");
+    upsertDrawerPerson("self", name, gender);
   } else {
     const chatId = createCreatedPersonTab(name, gender);
     setActiveChat(chatId);
+    upsertDrawerPerson(chatId, name, gender);
   }
 
-  setScreen("chat");
+  setScreen(shouldReturnToSidebar ? "sidebar" : "chat");
 }
 
 document.addEventListener("click", (event) => {
