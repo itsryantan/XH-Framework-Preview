@@ -127,6 +127,10 @@ function openPersonPanel(prefill = "", source = "new") {
   });
 }
 
+function openHealthPersonPanel() {
+  openPersonPanel("", "new");
+}
+
 function selectSelf() {
   if (!phone) return;
   if (!selfProfileCreated) {
@@ -192,6 +196,7 @@ document.addEventListener("click", (event) => {
   if (action === "choose-temp") openTempConsult();
   if (action === "choose-self") selectSelf();
   if (action === "open-new-person") openPersonPanel("", "new");
+  if (action === "open-health-person") openHealthPersonPanel();
   if (action === "select-created-person") {
     setActiveChat(control.dataset.chatId || "");
     phone.dataset.mode = "chat";
