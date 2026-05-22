@@ -21,8 +21,8 @@ const drawerAvatarByGender = {
   female: "./assets/avatar-mom.png",
 };
 const guideBubbles = {
-  self: "./assets/guide-self-from-unselected.png?v=20260522-cold-guide-bubbles",
-  mom: "./assets/guide-mom-from-unselected.png?v=20260522-cold-guide-bubbles",
+  self: "./assets/guide-self-from-unselected.png?v=20260522-cold-guide-bubbles-v2",
+  mom: "./assets/guide-mom-from-unselected.png?v=20260522-cold-guide-bubbles-v2",
 };
 const guideBubbleData = {
   self: "self-from-unselected",
@@ -236,7 +236,7 @@ function savePerson() {
   const name = nicknameField?.value.trim() || fallbackName;
   const gender = getSelectedGender();
   const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar" || source === "drawer";
-  const shouldShowChatGuide = !shouldReturnToSidebar && phone.dataset.panelReturnMode === "chat";
+  const shouldShowChatGuide = !shouldReturnToSidebar && (phone.dataset.panelReturnMode === "chat" || source === "self");
   const guideKind = getGuideKindForPerson(source);
   const returnMode = phone.dataset.panelReturnMode || phone.dataset.mode || "cold";
   phone.dataset.mode = shouldReturnToSidebar ? returnMode : "chat";
