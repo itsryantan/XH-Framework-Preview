@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>小荷AI医生冷启 Demo</title>
-    <link rel="stylesheet" href="./styles.css?v=20260522-health-entry-sidebar" />
+    <link rel="stylesheet" href="./styles.css?v=20260522-health-entry-sidebar-v2" />
   </head>
   <body>
     <main class="stage" aria-label="小荷AI医生冷启原型">
@@ -99,13 +99,13 @@
             </button>
           </div>
           <div class="drawer-scroll cold-drawer-scroll">
-            <button class="health-link cold-health-link" type="button" data-action="open-health-person">
+            <button class="health-link cold-health-link" type="button" data-action="open-sidebar-person">
               <img class="health-folder" src="./assets/cold-health-record-icon.png" alt="" />
               <span>健康档案</span>
               <span>›</span>
             </button>
             <div class="drawer-people cold-profile-list" aria-label="健康档案咨询人">
-              <button type="button" class="person-add" data-action="open-new-person" aria-label="新建咨询人"><span>＋</span></button>
+              <button type="button" class="person-add" data-action="open-sidebar-person" aria-label="新建咨询人"><span>＋</span></button>
             </div>
             <div class="drawer-line"></div>
             <div class="empty-history" aria-label="暂无历史">
@@ -167,6 +167,6 @@
       </section>
     </main>
 
-    <script src="./cold-start.js?v=20260522-health-entry-sidebar"></script>
+    <script src="./cold-start.js?v=20260522-health-entry-sidebar-v2"></script>
   </body>
 </html>

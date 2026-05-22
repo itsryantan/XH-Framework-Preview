@@ -149,12 +149,12 @@ function closeSidebar() {
   setScreen(phone.dataset.mode === "chat" ? "chat" : "cold");
 }
 
-function openPersonPanel(prefill = "", source = "new") {
+function openPersonPanel(prefill = "", source = "new", returnScreen = "") {
   if (!phone) return;
   phone.dataset.panel = "person";
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = source;
-  phone.dataset.panelReturnScreen = phone.dataset.screen || "";
+  phone.dataset.panelReturnScreen = returnScreen || phone.dataset.screen || "";
   setSelectedGender(source === "self" ? selfGender : "");
   if (nicknameField) {
     nicknameField.value = prefill;
@@ -165,7 +165,7 @@ function openPersonPanel(prefill = "", source = "new") {
 }
 
 function openHealthPersonPanel() {
-  openPersonPanel("", "new");
+  openPersonPanel("", "drawer", "sidebar");
 }
 
 function selectSelf() {
@@ -202,7 +202,7 @@ function savePerson() {
   const fallbackName = source === "self" ? "本人" : "咨询人";
   const name = nicknameField?.value.trim() || fallbackName;
   const gender = getSelectedGender();
-  const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar";
+  const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar" || source === "drawer";
   phone.dataset.mode = "chat";
   phone.dataset.panel = "none";
   phone.dataset.keyboard = "open";
@@ -238,7 +238,7 @@ document.addEventListener("click", (event) => {
   if (action === "choose-temp") openTempConsult();
   if (action === "choose-self") selectSelf();
   if (action === "open-new-person") openPersonPanel("", "new");
-  if (action === "open-health-person") openHealthPersonPanel();
+  if (action === "open-sidebar-person") openHealthPersonPanel();
   if (action === "select-created-person") {
     setActiveChat(control.dataset.chatId || "");
     phone.dataset.mode = "chat";
