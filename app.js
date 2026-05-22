@@ -13,7 +13,15 @@ const guideBubbleImg = guideBubble?.querySelector("img");
 const guideBubbles = {
   unselected: "./assets/guide-unselected.png",
   selected: "./assets/guide-selected-mom.png",
-  tempFromSelected: "./assets/guide-temp-from-selected.png"
+  tempFromSelected: "./assets/guide-temp-from-selected.png",
+  selfFromUnselected: "./assets/guide-self-from-unselected.png",
+  momFromUnselected: "./assets/guide-mom-from-unselected.png"
+};
+
+const guideBubbleDataKeys = {
+  tempFromSelected: "temp-from-selected",
+  selfFromUnselected: "self-from-unselected",
+  momFromUnselected: "mom-from-unselected"
 };
 
 let guideScenario = "unselected";
@@ -314,7 +322,7 @@ function applyGuideBubble(kind) {
   const src = guideBubbles[kind];
   if (!guideBubble || !guideBubbleImg || !src) return;
 
-  guideBubble.dataset.guide = kind === "tempFromSelected" ? "temp-from-selected" : kind;
+  guideBubble.dataset.guide = guideBubbleDataKeys[kind] || kind;
   guideBubbleImg.src = src;
   guideBubble.classList.add("is-visible");
   guideBubble.setAttribute("aria-hidden", "false");
@@ -449,6 +457,7 @@ document.addEventListener("click", (event) => {
 
   const action = control.dataset.action;
   let keepGuideVisible = false;
+  const previousChat = phone?.dataset.chat;
 
   if (action === "set-guide-scenario") {
     setGuideScenario(control.dataset.scenario);
@@ -475,11 +484,20 @@ document.addEventListener("click", (event) => {
       keepGuideVisible = true;
     }
   }
-  if (action === "chat-self") setChat("self");
+  if (action === "chat-self") {
+    setChat("self");
+    if (guideScenario === "unselected" && previousChat === "temp") {
+      transitionGuideBubble("selfFromUnselected");
+      keepGuideVisible = true;
+    }
+  }
   if (action === "chat-mom") {
     setChat("mom");
     if (guideScenario === "selected") {
       transitionGuideBubble("selected");
+      keepGuideVisible = true;
+    } else if (guideScenario === "unselected" && previousChat === "temp") {
+      transitionGuideBubble("momFromUnselected");
       keepGuideVisible = true;
     }
   }

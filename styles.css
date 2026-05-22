@@ -309,6 +309,18 @@ button {
   height: 95px;
 }
 
+.guide-bubble[data-guide="self-from-unselected"] {
+  left: 48px;
+  width: 201px;
+  height: 95px;
+}
+
+.guide-bubble[data-guide="mom-from-unselected"] {
+  left: 116px;
+  width: 201px;
+  height: 95px;
+}
+
 .guide-bubble[data-guide="temp-from-selected"] {
   left: -10px;
   width: 306px;
