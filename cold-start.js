@@ -10,6 +10,8 @@ const tabs = document.querySelector(".cold-tabs");
 const createPersonTab = document.querySelector(".tab-new-person");
 const drawerPeople = document.querySelector(".cold-profile-list");
 const drawerAddButton = drawerPeople?.querySelector(".person-add");
+const guideBubble = document.querySelector(".cold-guide-bubble");
+const guideBubbleImg = guideBubble?.querySelector("img");
 const avatarByGender = {
   male: "./assets/tab-self.png",
   female: "./assets/tab-mom.png",
@@ -18,9 +20,38 @@ const drawerAvatarByGender = {
   male: "./assets/avatar-self.png",
   female: "./assets/avatar-mom.png",
 };
+const guideBubbles = {
+  self: "./assets/guide-self-from-unselected.png?v=20260522-cold-guide-bubbles",
+  mom: "./assets/guide-mom-from-unselected.png?v=20260522-cold-guide-bubbles",
+};
+const guideBubbleData = {
+  self: "self-from-unselected",
+  mom: "mom-from-unselected",
+};
 let createdPersonIndex = 0;
 let selfGender = "male";
 let selfProfileCreated = false;
+
+function showGuideBubble(kind) {
+  const src = guideBubbles[kind];
+  if (!guideBubble || !guideBubbleImg || !src) return;
+
+  guideBubble.dataset.guide = guideBubbleData[kind] || kind;
+  guideBubbleImg.src = src;
+  guideBubble.classList.add("is-visible");
+  guideBubble.setAttribute("aria-hidden", "false");
+}
+
+function hideGuideBubble() {
+  if (!guideBubble) return;
+  guideBubble.classList.remove("is-visible");
+  guideBubble.setAttribute("aria-hidden", "true");
+}
+
+function getGuideKindForPerson(source) {
+  if (source === "self") return "self";
+  return "mom";
+}
 
 function appendMessage(message) {
   if (!chatList) return;
@@ -205,6 +236,8 @@ function savePerson() {
   const name = nicknameField?.value.trim() || fallbackName;
   const gender = getSelectedGender();
   const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar" || source === "drawer";
+  const shouldShowChatGuide = !shouldReturnToSidebar && phone.dataset.panelReturnMode === "chat";
+  const guideKind = getGuideKindForPerson(source);
   const returnMode = phone.dataset.panelReturnMode || phone.dataset.mode || "cold";
   phone.dataset.mode = shouldReturnToSidebar ? returnMode : "chat";
   phone.dataset.panel = "none";
@@ -227,16 +260,29 @@ function savePerson() {
   }
 
   setScreen(shouldReturnToSidebar ? "sidebar" : "chat");
+  if (shouldShowChatGuide) {
+    showGuideBubble(guideKind);
+  }
 }
 
 document.addEventListener("click", (event) => {
+  if (event.target.closest(".cold-guide-bubble")) {
+    return;
+  }
+
   const control = event.target.closest("[data-action]");
   if (event.target.closest(".sex-row")) {
     collapseKeyboard();
   }
-  if (!control) return;
+  if (!control) {
+    hideGuideBubble();
+    return;
+  }
 
   const action = control.dataset.action;
+  if (action !== "save-person") {
+    hideGuideBubble();
+  }
   if (action === "open-sidebar") openSidebar();
   if (action === "close-sidebar") closeSidebar();
   if (action === "choose-temp") openTempConsult();
