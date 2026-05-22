@@ -14,8 +14,8 @@ const guideBubbles = {
   unselected: "./assets/guide-unselected.png",
   selected: "./assets/guide-selected-mom.png",
   tempFromSelected: "./assets/guide-temp-from-selected.png",
-  selfFromUnselected: "./assets/guide-self-from-unselected.png",
-  momFromUnselected: "./assets/guide-mom-from-unselected.png"
+  selfFromUnselected: "./assets/guide-self-from-unselected.png?v=20260522-unselected-tab-guide",
+  momFromUnselected: "./assets/guide-mom-from-unselected.png?v=20260522-unselected-tab-guide"
 };
 
 const guideBubbleDataKeys = {
