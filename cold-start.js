@@ -155,6 +155,7 @@ function openPersonPanel(prefill = "", source = "new", returnScreen = "") {
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = source;
   phone.dataset.panelReturnScreen = returnScreen || phone.dataset.screen || "";
+  phone.dataset.panelReturnMode = phone.dataset.mode || "";
   setSelectedGender(source === "self" ? selfGender : "");
   if (nicknameField) {
     nicknameField.value = prefill;
@@ -189,6 +190,7 @@ function closePersonPanel() {
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = "";
   phone.dataset.panelReturnScreen = "";
+  phone.dataset.panelReturnMode = "";
 }
 
 function collapseKeyboard() {
@@ -203,11 +205,13 @@ function savePerson() {
   const name = nicknameField?.value.trim() || fallbackName;
   const gender = getSelectedGender();
   const shouldReturnToSidebar = phone.dataset.panelReturnScreen === "sidebar" || source === "drawer";
-  phone.dataset.mode = "chat";
+  const returnMode = phone.dataset.panelReturnMode || phone.dataset.mode || "cold";
+  phone.dataset.mode = shouldReturnToSidebar ? returnMode : "chat";
   phone.dataset.panel = "none";
   phone.dataset.keyboard = "open";
   phone.dataset.personSource = "";
   phone.dataset.panelReturnScreen = "";
+  phone.dataset.panelReturnMode = "";
 
   if (source === "self") {
     selfProfileCreated = true;
